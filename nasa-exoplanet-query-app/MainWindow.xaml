@@ -7,6 +7,65 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <!--<DataGrid x:Name="ExoplanetDataGrid"/>-->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label
+                Content="Discovery Year:"
+                Grid.Column="0"
+                Grid.Row="0"/>
+            <Label
+                Content="Discovery Method:"
+                Grid.Column="0"
+                Grid.Row="1"/>
+            <Label
+                Content="Host Name:"
+                Grid.Column="0"
+                Grid.Row="2"/>
+            <Label
+                Content="Discovery Facility:"
+                Grid.Column="0"
+                Grid.Row="3"/>
 
+            <ComboBox
+                x:Name="DiscYearSelection"
+                Grid.Column="1"
+                Grid.Row="0"
+                ItemsSource="{Binding DiscYearStrings}"
+                SelectedIndex="{Binding DiscYearSelectedIndex}"/>
+            <ComboBox
+                x:Name="DiscMethodSelection"
+                Grid.Column="1"
+                Grid.Row="1"
+                ItemsSource="{Binding DiscMethodStrings}"
+                SelectedIndex="{Binding DiscMethodSelectedIndex}"/>
+            <ComboBox
+                x:Name="HostNameSelection"
+                Grid.Column="1"
+                Grid.Row="2"
+                ItemsSource="{Binding HostNameStrings}"
+                SelectedIndex="{Binding HostNameSelectedIndex}"/>
+            <ComboBox
+                x:Name="DiscFacilitySelection"
+                Grid.Column="1"
+                Grid.Row="3"
+                ItemsSource="{Binding DiscFacilityStrings}"
+                SelectedIndex="{Binding DiscFacilitySelectedIndex}"/>
+        </Grid>
+
+        <Button
+                Content="Refresh"
+                Width="75"
+                Height="35"
+                Click="PS_Table_Refresh_Button_Click"/>
     </Grid>
 </Window>
