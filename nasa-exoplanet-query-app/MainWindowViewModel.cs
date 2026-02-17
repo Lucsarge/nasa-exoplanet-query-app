@@ -77,7 +77,6 @@ namespace nasa_exoplanet_query_app {
             }
         }
 
-
         public MainWindowViewModel() {
             mDiscYearStrings = ["N/S"];
             mDiscYearSelectedIndex = 0;

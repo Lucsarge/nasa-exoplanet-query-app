@@ -14,7 +14,6 @@ namespace nasa_exoplanet_query_app {
             vm = new MainWindowViewModel();
 
             DataContext = vm;
-
         }
 
         private void QueryPlanetarySystems() {
