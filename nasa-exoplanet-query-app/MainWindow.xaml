@@ -7,7 +7,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <!--<DataGrid x:Name="ExoplanetDataGrid"/>-->
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -18,6 +17,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Label
                 Content="Discovery Year:"
@@ -60,12 +60,19 @@
                 Grid.Row="3"
                 ItemsSource="{Binding DiscFacilityStrings}"
                 SelectedIndex="{Binding DiscFacilitySelectedIndex}"/>
+
+            <DataGrid
+                Grid.Column="0"
+                Grid.Row="4"
+                Grid.ColumnSpan="2"
+                ItemsSource="{Binding DiscoveryResults}"
+                AutoGenerateColumns="True"/>
         </Grid>
 
         <Button
-                Content="Refresh"
-                Width="75"
-                Height="35"
-                Click="PS_Table_Refresh_Button_Click"/>
+            Content="Refresh"
+            Width="75"
+            Height="35"
+            Click="PS_Table_Refresh_Button_Click"/>
     </Grid>
 </Window>
