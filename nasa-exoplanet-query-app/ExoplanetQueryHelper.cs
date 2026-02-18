@@ -1,4 +1,4 @@
-﻿namespace nasa_exoplanet_query_app {
+namespace nasa_exoplanet_query_app {
     // Class for utilizing the Table Access Protocol (TAP) to query the Exoplanet Archive
     // Documentation here: https://exoplanetarchive.ipac.caltech.edu/docs/TAP/usingTAP.html
     public static class ExoplanetTAPHelper {

@@ -1,4 +1,4 @@
-﻿using System.Net.Http;
+using System.Net.Http;
 using System.Windows;
 
 namespace nasa_exoplanet_query_app {
