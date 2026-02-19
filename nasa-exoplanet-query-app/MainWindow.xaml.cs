@@ -18,31 +18,6 @@ namespace nasa_exoplanet_query_app {
             DataContext = vm;
         }
 
-        private void PopulateDropdownFields() {
-            string requestDiscYear = ExoplanetTAPHelper.GetPSHTTPRequestString(ExoplanetTAPHelper.DISC_YEAR, ExoplanetTAPHelper.FORMAT_CSV);
-            string requestDiscMethod = ExoplanetTAPHelper.GetPSHTTPRequestString(ExoplanetTAPHelper.DISC_METHOD, ExoplanetTAPHelper.FORMAT_CSV);
-            string requestHostName = ExoplanetTAPHelper.GetPSHTTPRequestString(ExoplanetTAPHelper.HOST_NAME, ExoplanetTAPHelper.FORMAT_CSV);
-            string requestDiscFacility = ExoplanetTAPHelper.GetPSHTTPRequestString(ExoplanetTAPHelper.DISC_FACILITY, ExoplanetTAPHelper.FORMAT_CSV);
-
-            Task.Run(async () => {
-                HttpClient client = new HttpClient();
-                string discYearResponse = await client.GetStringAsync(requestDiscYear);
-                string discMethodResponse = await client.GetStringAsync(requestDiscMethod);
-                string hostNameResponse = await client.GetStringAsync(requestHostName);
-                string discFacilityResponse = await client.GetStringAsync(requestDiscFacility);
-
-                string[] values;
-                values = discYearResponse.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-                vm.DiscYearStrings = values;
-                values = discMethodResponse.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-                vm.DiscMethodStrings = values;
-                values = hostNameResponse.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-                vm.HostNameStrings = values;
-                values = discFacilityResponse.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-                vm.DiscFacilityStrings = values;
-            });
-        }
-
         private void GetResultsFromPlanetarySystems() {
             string requestString = ExoplanetTAPHelper.GetPSFilteredResultsRequestString();
             Task.Run(async () => {
@@ -66,7 +41,6 @@ namespace nasa_exoplanet_query_app {
 
         private void PS_Table_Refresh_Button_Click(object sender, RoutedEventArgs e) {
             GetResultsFromPlanetarySystems();
-            //PopulateDropdownFields();
         }
     }
 }
