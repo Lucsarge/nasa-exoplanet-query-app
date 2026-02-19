@@ -65,7 +65,7 @@
                 Grid.Column="0"
                 Grid.Row="4"
                 Grid.ColumnSpan="2"
-                ItemsSource="{Binding DiscoveryResults}"
+                ItemsSource="{Binding ExoPlanetCollection}"
                 AutoGenerateColumns="True"/>
         </Grid>
 
