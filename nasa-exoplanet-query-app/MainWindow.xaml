@@ -17,6 +17,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Label
@@ -61,18 +62,21 @@
                 ItemsSource="{Binding DiscFacilityStrings}"
                 SelectedIndex="{Binding DiscFacilitySelectedIndex}"/>
 
-            <DataGrid
+            <Button
                 Grid.Column="0"
                 Grid.Row="4"
+                Grid.ColumnSpan="2"
+                Content="Filter"
+                Width="75"
+                Height="35"
+                Click="PS_Table_Refresh_Button_Click"/>
+
+            <DataGrid
+                Grid.Column="0"
+                Grid.Row="5"
                 Grid.ColumnSpan="2"
                 ItemsSource="{Binding ExoPlanetCollection}"
                 AutoGenerateColumns="True"/>
         </Grid>
-
-        <Button
-            Content="Refresh"
-            Width="75"
-            Height="35"
-            Click="PS_Table_Refresh_Button_Click"/>
     </Grid>
 </Window>

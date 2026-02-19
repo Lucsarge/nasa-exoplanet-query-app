@@ -1,7 +1,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
-using System.Text.Json.Serialization;
 
 namespace nasa_exoplanet_query_app {
     public class MainWindowViewModel : INotifyPropertyChanged {
@@ -89,30 +89,69 @@ namespace nasa_exoplanet_query_app {
         }
 
         public MainWindowViewModel() {
-            mDiscYearStrings = ["N/S"];
+            mDiscYearStrings = [NOT_SPECIFIED];
             mDiscYearSelectedIndex = 0;
 
-            mDiscMethodStrings = ["N/S"];
+            mDiscMethodStrings = [NOT_SPECIFIED];
             mDiscMethodSelectedIndex = 0;
 
-            mHostNameStrings = ["N/S"];
+            mHostNameStrings = [NOT_SPECIFIED];
             mHostNameSelectedIndex = 0;
 
-            mDiscFacilityStrings = ["N/S"];
+            mDiscFacilityStrings = [NOT_SPECIFIED];
             mDiscFacilitySelectedIndex = 0;
+
+            PopulateDropdownFields();
 
             mExoPlanetCollection = new ObservableCollection<ExoPlanetData>();
         }
 
         private string[] CopyArrayValuesToDropDown(string[] values) {
+            // values length should be the number of unique values plus the column header, so unnecessary to add 1 for Not Specified
             string[] newStrings = new string[values.Length];
             newStrings[0] = NOT_SPECIFIED; // Set the first value to Not Specifieds
+
             // starting at 1 ignores the column header
             for (int i = 1; i < values.Length; i++) {
                 newStrings[i] = values[i];
             }
 
             return newStrings;
+        }
+
+        private void PopulateDropdownFields() {
+            string requestHostName = ExoplanetTAPHelper.GetPSHTTPRequestString(ExoplanetTAPHelper.HOST_NAME, ExoplanetTAPHelper.FORMAT_CSV);
+            string requestDiscFacility = ExoplanetTAPHelper.GetPSHTTPRequestString(ExoplanetTAPHelper.DISC_FACILITY, ExoplanetTAPHelper.FORMAT_CSV);
+            string requestDiscYear = ExoplanetTAPHelper.GetPSHTTPRequestString(ExoplanetTAPHelper.DISC_YEAR, ExoplanetTAPHelper.FORMAT_CSV);
+            string requestDiscMethod = ExoplanetTAPHelper.GetPSHTTPRequestString(ExoplanetTAPHelper.DISC_METHOD, ExoplanetTAPHelper.FORMAT_CSV);
+
+            Task.Run(async () => {
+                HttpClient client = new HttpClient();
+                string response = await client.GetStringAsync(requestHostName);
+                string[] values = response.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+                values = values.Select(s => s.Substring(1, s.Length - 2)).ToArray(); // remove the double quotes around each element
+                HostNameStrings = values;
+            });
+            Task.Run(async () => {
+                HttpClient client = new HttpClient();
+                string response = await client.GetStringAsync(requestDiscFacility);
+                string[] values = response.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+                values = values.Select(s => s.Substring(1, s.Length - 2)).ToArray(); // remove the double quotes around each element
+                DiscFacilityStrings = values;
+            });
+            Task.Run(async () => {
+                HttpClient client = new HttpClient();
+                string response = await client.GetStringAsync(requestDiscYear);
+                string[] values = response.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+                DiscYearStrings = values;
+            });
+            Task.Run(async () => {
+                HttpClient client = new HttpClient();
+                string response = await client.GetStringAsync(requestDiscMethod);
+                string[] values = response.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+                values = values.Select(s => s.Substring(1, s.Length - 2)).ToArray(); // remove the double quotes around each element
+                DiscMethodStrings = values;
+            });
         }
 
         #region INotifyPropertyChanged implementation
