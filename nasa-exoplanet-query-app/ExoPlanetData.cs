@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace nasa_exoplanet_query_app {
     public class ExoPlanetData {
@@ -16,8 +11,9 @@ namespace nasa_exoplanet_query_app {
         [JsonPropertyName(ExoplanetTAPHelper.DISC_FACILITY)]
         public string DiscoveryFacility { get; set; }
 
+        // Discovery year is nullable because some entries in the archive return as null
         [JsonPropertyName(ExoplanetTAPHelper.DISC_YEAR)]
-        public int DiscoveryYear { get; set; }
+        public int? DiscoveryYear { get; set; }
 
         [JsonPropertyName(ExoplanetTAPHelper.DISC_METHOD)]
         public string DiscoveryMethod { get; set; }

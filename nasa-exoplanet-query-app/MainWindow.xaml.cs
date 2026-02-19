@@ -19,7 +19,11 @@ namespace nasa_exoplanet_query_app {
         }
 
         private void GetResultsFromPlanetarySystems() {
-            string requestString = ExoplanetTAPHelper.GetPSFilteredResultsRequestString();
+            string requestString = ExoplanetTAPHelper.GetPSFilteredResultsRequestString(vm.HostNameStrings[vm.HostNameSelectedIndex],
+                                                                                        vm.DiscFacilityStrings[vm.DiscFacilitySelectedIndex],
+                                                                                        vm.DiscYearStrings[vm.DiscYearSelectedIndex],
+                                                                                        vm.DiscMethodStrings[vm.DiscMethodSelectedIndex]);
+
             Task.Run(async () => {
                 HttpClient client = new HttpClient();
                 string response = await client.GetStringAsync(requestString);

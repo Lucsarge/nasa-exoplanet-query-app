@@ -76,7 +76,12 @@
                 Grid.Row="5"
                 Grid.ColumnSpan="2"
                 ItemsSource="{Binding ExoPlanetCollection}"
-                AutoGenerateColumns="True"/>
+                AutoGenerateColumns="True"
+                CanUserAddRows="False"
+                CanUserDeleteRows="False"
+                CanUserResizeRows="False"
+                CanUserResizeColumns="True"
+                CanUserSortColumns="True"/>
         </Grid>
     </Grid>
 </Window>
