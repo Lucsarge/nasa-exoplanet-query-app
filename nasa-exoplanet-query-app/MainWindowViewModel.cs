@@ -1,5 +1,7 @@
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
 
 namespace nasa_exoplanet_query_app {
     public class MainWindowViewModel : INotifyPropertyChanged {
@@ -77,6 +79,15 @@ namespace nasa_exoplanet_query_app {
             }
         }
 
+        private ObservableCollection<ExoPlanetData> mExoPlanetCollection;
+        public ObservableCollection<ExoPlanetData> ExoPlanetCollection {
+            get => mExoPlanetCollection;
+            set {
+                mExoPlanetCollection = value;
+                OnPropertyChanged();
+            }
+        }
+
         public MainWindowViewModel() {
             mDiscYearStrings = ["N/S"];
             mDiscYearSelectedIndex = 0;
@@ -89,6 +100,8 @@ namespace nasa_exoplanet_query_app {
 
             mDiscFacilityStrings = ["N/S"];
             mDiscFacilitySelectedIndex = 0;
+
+            mExoPlanetCollection = new ObservableCollection<ExoPlanetData>();
         }
 
         private string[] CopyArrayValuesToDropDown(string[] values) {
@@ -101,7 +114,6 @@ namespace nasa_exoplanet_query_app {
 
             return newStrings;
         }
-
 
         #region INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;
