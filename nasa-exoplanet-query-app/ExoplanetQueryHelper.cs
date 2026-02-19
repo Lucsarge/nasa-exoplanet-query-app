@@ -1,6 +1,8 @@
 namespace nasa_exoplanet_query_app {
     // Class for utilizing the Table Access Protocol (TAP) to query the Exoplanet Archive
     // Documentation here: https://exoplanetarchive.ipac.caltech.edu/docs/TAP/usingTAP.html
+    // Additional reference: https://www.ivoa.net/documents/TAP/20190927/REC-TAP-1.1.html
+    // Additional reference: https://www.ivoa.net/documents/ADQL/20180112/PR-ADQL-2.1-20180112.html
     public static class ExoplanetTAPHelper {
         //public static readonly string EXOPLANET_ARCHIVE_BASE_URL = "https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?";
         public static readonly string PlANETARY_SYSTEMS_TABLE = "ps";
