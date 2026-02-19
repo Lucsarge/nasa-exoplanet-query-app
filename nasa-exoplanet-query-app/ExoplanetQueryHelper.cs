@@ -33,7 +33,7 @@ namespace nasa_exoplanet_query_app {
             return requestString;
         }
 
-        public static string GetPSFilteredResultsRequestString(string format = FORMAT_JSON) {
+        public static string GetPSFilteredResultsRequestString(string hostName, string discFacility, string discYear, string discMethod, string format = FORMAT_JSON) {
             // TODO: currently filtering for discovery year 1999, but should be dynamic based on user input
             string requestString = @$"{EXOPLANET_ARCHIVE_BASE_URL}
                                     select+{PLANET_NAME},
@@ -44,9 +44,56 @@ namespace nasa_exoplanet_query_app {
                                            {STAR_COUNT},
                                            {PLANET_COUNT},
                                            {MOON_COUNT}+
-                                    from+{PlANETARY_SYSTEMS_TABLE}+
-                                    where+{DISC_YEAR}='1999'+
-                                    {format}";
+                                    from+{PlANETARY_SYSTEMS_TABLE}+";
+
+            bool isFirstFilter = true;
+            // append the appropriate where clauses based on the currently selected filters
+            if (hostName != MainWindowViewModel.NOT_SPECIFIED) {
+                if (isFirstFilter) {
+                    isFirstFilter = false;
+                    requestString += $"where+{HOST_NAME}='{hostName}'+";
+                }
+                else {
+                    requestString += "and+";
+                    requestString += $"{HOST_NAME}='{hostName}'+";
+                }
+            }
+
+            if (discFacility != MainWindowViewModel.NOT_SPECIFIED) {
+                if (isFirstFilter) {
+                    isFirstFilter = false;
+                    requestString += $"where+{DISC_FACILITY}='{discFacility}'+";
+                }
+                else {
+                    requestString += "and+";
+                    requestString += $"{DISC_FACILITY}='{discFacility}'+";
+                }
+            }
+
+            if (discYear != MainWindowViewModel.NOT_SPECIFIED) {
+                if (isFirstFilter) {
+                    isFirstFilter = false;
+                    requestString += $"where+{DISC_YEAR}='{discYear}'+";
+                }
+                else {
+                    requestString += "and+";
+                    requestString += $"{DISC_YEAR}='{discYear}'+";
+                }
+            }
+
+            if (discMethod != MainWindowViewModel.NOT_SPECIFIED) {
+                if (isFirstFilter) {
+                    isFirstFilter = false;
+                    requestString += $"where+{DISC_METHOD}='{discMethod}'+";
+                }
+                else {
+                    requestString += "and+";
+                    requestString += $"{DISC_METHOD}='{discMethod}'+";
+                }
+            }
+
+            requestString += format; // append the file format
+
             return requestString;
         }
 

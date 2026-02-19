@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace nasa_exoplanet_query_app {
     public class MainWindowViewModel : INotifyPropertyChanged {
-        private readonly string NOT_SPECIFIED = "N/S";
+        public const string NOT_SPECIFIED = "N/S";
 
         private int mDiscYearSelectedIndex;
         public int DiscYearSelectedIndex {
