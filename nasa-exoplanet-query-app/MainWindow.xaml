@@ -41,24 +41,28 @@
                 x:Name="DiscYearSelection"
                 Grid.Column="1"
                 Grid.Row="0"
+                DataContext="{Binding EPModel}"
                 ItemsSource="{Binding DiscYearStrings}"
                 SelectedIndex="{Binding DiscYearSelectedIndex}"/>
             <ComboBox
                 x:Name="DiscMethodSelection"
                 Grid.Column="1"
                 Grid.Row="1"
+                DataContext="{Binding EPModel}"
                 ItemsSource="{Binding DiscMethodStrings}"
                 SelectedIndex="{Binding DiscMethodSelectedIndex}"/>
             <ComboBox
                 x:Name="HostNameSelection"
                 Grid.Column="1"
                 Grid.Row="2"
+                DataContext="{Binding EPModel}"
                 ItemsSource="{Binding HostNameStrings}"
                 SelectedIndex="{Binding HostNameSelectedIndex}"/>
             <ComboBox
                 x:Name="DiscFacilitySelection"
                 Grid.Column="1"
                 Grid.Row="3"
+                DataContext="{Binding EPModel}"
                 ItemsSource="{Binding DiscFacilityStrings}"
                 SelectedIndex="{Binding DiscFacilitySelectedIndex}"/>
 
@@ -75,6 +79,7 @@
                 Grid.Column="0"
                 Grid.Row="5"
                 Grid.ColumnSpan="2"
+                DataContext="{Binding EPModel}"
                 ItemsSource="{Binding ExoPlanetCollection}"
                 AutoGenerateColumns="True"
                 CanUserAddRows="False"

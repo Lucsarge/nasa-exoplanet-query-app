@@ -1,115 +1,25 @@
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Net.Http;
-using System.Runtime.CompilerServices;
+using System.Text.Json;
+using System.Windows;
 
 namespace nasa_exoplanet_query_app {
-    public class MainWindowViewModel : INotifyPropertyChanged {
-        public const string NOT_SPECIFIED = "N/S";
-
-        private int mDiscYearSelectedIndex;
-        public int DiscYearSelectedIndex {
-            get => mDiscYearSelectedIndex;
-            set {
-                mDiscYearSelectedIndex = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string[] mDiscYearStrings;
-        public string[] DiscYearStrings {
-            get => mDiscYearStrings;
-            set {
-                mDiscYearStrings = CopyArrayValuesToDropDown(value);
-                OnPropertyChanged();
-            }
-        }
-
-        private int mDiscMethodSelectedIndex;
-        public int DiscMethodSelectedIndex {
-            get => mDiscMethodSelectedIndex;
-            set {
-                mDiscMethodSelectedIndex = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string[] mDiscMethodStrings;
-        public string[] DiscMethodStrings {
-            get => mDiscMethodStrings;
-            set {
-                mDiscMethodStrings = CopyArrayValuesToDropDown(value);
-                OnPropertyChanged();
-            }
-        }
-
-        private int mHostNameSelectedIndex;
-        public int HostNameSelectedIndex {
-            get => mHostNameSelectedIndex;
-            set {
-                mHostNameSelectedIndex = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string[] mHostNameStrings;
-        public string[] HostNameStrings {
-            get => mHostNameStrings;
-            set {
-                mHostNameStrings = CopyArrayValuesToDropDown(value);
-                OnPropertyChanged();
-            }
-        }
-
-        private int mDiscFacilitySelectedIndex;
-        public int DiscFacilitySelectedIndex {
-            get => mDiscFacilitySelectedIndex;
-            set {
-                mDiscFacilitySelectedIndex = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string[] mDiscFacilityStrings;
-        public string[] DiscFacilityStrings {
-            get => mDiscFacilityStrings;
-            set {
-                mDiscFacilityStrings = CopyArrayValuesToDropDown(value);
-                OnPropertyChanged();
-            }
-        }
-
-        private ObservableCollection<ExoPlanetData> mExoPlanetCollection;
-        public ObservableCollection<ExoPlanetData> ExoPlanetCollection {
-            get => mExoPlanetCollection;
-            set {
-                mExoPlanetCollection = value;
-                OnPropertyChanged();
-            }
+    public class MainWindowViewModel {
+        private ExoPlanetDataModel mEPModel;
+        public ExoPlanetDataModel EPModel {
+            get => mEPModel;
         }
 
         public MainWindowViewModel() {
-            mDiscYearStrings = [NOT_SPECIFIED];
-            mDiscYearSelectedIndex = 0;
-
-            mDiscMethodStrings = [NOT_SPECIFIED];
-            mDiscMethodSelectedIndex = 0;
-
-            mHostNameStrings = [NOT_SPECIFIED];
-            mHostNameSelectedIndex = 0;
-
-            mDiscFacilityStrings = [NOT_SPECIFIED];
-            mDiscFacilitySelectedIndex = 0;
+            mEPModel = new ExoPlanetDataModel();
 
             PopulateDropdownFields();
-
-            mExoPlanetCollection = new ObservableCollection<ExoPlanetData>();
         }
 
         private string[] CopyArrayValuesToDropDown(string[] values) {
             // values length should be the number of unique values plus the column header, so unnecessary to add 1 for Not Specified
             string[] newStrings = new string[values.Length];
-            newStrings[0] = NOT_SPECIFIED; // Set the first value to Not Specifieds
+            newStrings[0] = ExoPlanetDataModel.NOT_SPECIFIED; // Set the first value to Not Specifieds
 
             // starting at 1 ignores the column header
             for (int i = 1; i < values.Length; i++) {
@@ -130,36 +40,53 @@ namespace nasa_exoplanet_query_app {
                 string response = await client.GetStringAsync(requestHostName);
                 string[] values = response.Split('\n', StringSplitOptions.RemoveEmptyEntries);
                 values = values.Select(s => s.Substring(1, s.Length - 2)).ToArray(); // remove the double quotes around each element
-                HostNameStrings = values;
+                EPModel.HostNameStrings = CopyArrayValuesToDropDown(values);
             });
             Task.Run(async () => {
                 HttpClient client = new HttpClient();
                 string response = await client.GetStringAsync(requestDiscFacility);
                 string[] values = response.Split('\n', StringSplitOptions.RemoveEmptyEntries);
                 values = values.Select(s => s.Substring(1, s.Length - 2)).ToArray(); // remove the double quotes around each element
-                DiscFacilityStrings = values;
+                EPModel.DiscFacilityStrings = CopyArrayValuesToDropDown(values);
             });
             Task.Run(async () => {
                 HttpClient client = new HttpClient();
                 string response = await client.GetStringAsync(requestDiscYear);
                 string[] values = response.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-                DiscYearStrings = values;
+                EPModel.DiscYearStrings = CopyArrayValuesToDropDown(values);
             });
             Task.Run(async () => {
                 HttpClient client = new HttpClient();
                 string response = await client.GetStringAsync(requestDiscMethod);
                 string[] values = response.Split('\n', StringSplitOptions.RemoveEmptyEntries);
                 values = values.Select(s => s.Substring(1, s.Length - 2)).ToArray(); // remove the double quotes around each element
-                DiscMethodStrings = values;
+                EPModel.DiscMethodStrings = CopyArrayValuesToDropDown(values);
             });
         }
 
-        #region INotifyPropertyChanged implementation
-        public event PropertyChangedEventHandler PropertyChanged;
+        public void GetResultsFromPlanetarySystems() {
+            string requestString = ExoplanetTAPHelper.GetPSFilteredResultsRequestString(mEPModel.HostNameStrings[mEPModel.HostNameSelectedIndex],
+                                                                                        mEPModel.DiscFacilityStrings[mEPModel.DiscFacilitySelectedIndex],
+                                                                                        mEPModel.DiscYearStrings[mEPModel.DiscYearSelectedIndex],
+                                                                                        mEPModel.DiscMethodStrings[mEPModel.DiscMethodSelectedIndex]);
 
-        protected void OnPropertyChanged([CallerMemberName] string name = null) {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            Task.Run(async () => {
+                HttpClient client = new HttpClient();
+                string response = await client.GetStringAsync(requestString);
+
+                try {
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var data = JsonSerializer.Deserialize<List<ExoPlanetData>>(response, options);
+
+                    if (data != null) {
+                        EPModel.ExoPlanetCollection = new ObservableCollection<ExoPlanetData>(data);
+                    }
+                }
+                catch (JsonException ex) {
+                    MessageBox.Show($"JSON Error: {ex.Message}\n\nResponse preview: {response.Substring(0, Math.Min(200, response.Length))}");
+                    System.Diagnostics.Debug.WriteLine($"Full response: {response}");
+                }
+            });
         }
-        #endregion
     }
 }

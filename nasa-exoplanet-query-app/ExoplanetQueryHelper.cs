@@ -48,7 +48,7 @@ namespace nasa_exoplanet_query_app {
 
             bool isFirstFilter = true;
             // append the appropriate where clauses based on the currently selected filters
-            if (hostName != MainWindowViewModel.NOT_SPECIFIED) {
+            if (hostName != ExoPlanetDataModel.NOT_SPECIFIED) {
                 if (isFirstFilter) {
                     isFirstFilter = false;
                     requestString += $"where+{HOST_NAME}='{hostName}'+";
@@ -59,7 +59,7 @@ namespace nasa_exoplanet_query_app {
                 }
             }
 
-            if (discFacility != MainWindowViewModel.NOT_SPECIFIED) {
+            if (discFacility != ExoPlanetDataModel.NOT_SPECIFIED) {
                 if (isFirstFilter) {
                     isFirstFilter = false;
                     requestString += $"where+{DISC_FACILITY}='{discFacility}'+";
@@ -70,7 +70,7 @@ namespace nasa_exoplanet_query_app {
                 }
             }
 
-            if (discYear != MainWindowViewModel.NOT_SPECIFIED) {
+            if (discYear != ExoPlanetDataModel.NOT_SPECIFIED) {
                 if (isFirstFilter) {
                     isFirstFilter = false;
                     requestString += $"where+{DISC_YEAR}='{discYear}'+";
@@ -81,7 +81,7 @@ namespace nasa_exoplanet_query_app {
                 }
             }
 
-            if (discMethod != MainWindowViewModel.NOT_SPECIFIED) {
+            if (discMethod != ExoPlanetDataModel.NOT_SPECIFIED) {
                 if (isFirstFilter) {
                     isFirstFilter = false;
                     requestString += $"where+{DISC_METHOD}='{discMethod}'+";
