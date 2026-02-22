@@ -17,6 +17,10 @@ namespace nasa_exoplanet_query_app {
         }
 
         private string[] CopyArrayValuesToDropDown(string[] values) {
+            if (values.Length == 0) {
+                return new string[] { ExoPlanetDataModel.NOT_SPECIFIED };
+            }
+
             // values length should be the number of unique values plus the column header, so unnecessary to add 1 for Not Specified
             string[] newStrings = new string[values.Length];
             newStrings[0] = ExoPlanetDataModel.NOT_SPECIFIED; // Set the first value to Not Specifieds
@@ -52,7 +56,7 @@ namespace nasa_exoplanet_query_app {
             Task.Run(async () => {
                 HttpClient client = new HttpClient();
                 string response = await client.GetStringAsync(requestDiscYear);
-                string[] values = response.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+                string[] values = response.Split('\n', StringSplitOptions.RemoveEmptyEntries); // elements are returned as numbers, no double quotes
                 EPModel.DiscYearStrings = CopyArrayValuesToDropDown(values);
             });
             Task.Run(async () => {
