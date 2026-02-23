@@ -21,14 +21,14 @@ namespace nasa_exoplanet_query_app {
         public const string FORMAT_CSV = "&format=csv";
         public const string FORMAT_JSON = "&format=json";
 
-        // selectParam must be separated by comma if multiple
-        // TODO: change distinct to use group by
-        public static string GetPSHTTPRequestString(string selectParam = "*", string format = "") {
-            string requestString = $"{EXOPLANET_ARCHIVE_BASE_URL}" +
-                                   $"select+distinct+{selectParam}" +
-                                   $"+from+{PlANETARY_SYSTEMS_TABLE}" +
-                                   $"+order+by+{selectParam}+asc" +
-                                   $"{format}";
+        // retrieves the unique values for the requested column(s) in the Planetary Systems table,
+        // ordered ascending alphabetically, in the format specified (default is CSV)
+        public static string GetPSUniqueColumnValuesRequestString(string selectParam = "*", string format = FORMAT_CSV) {
+            string requestString = @$"{EXOPLANET_ARCHIVE_BASE_URL}
+                                       select+distinct+{selectParam}
+                                       +from+{PlANETARY_SYSTEMS_TABLE}
+                                       +order+by+{selectParam}+asc
+                                       {format}";
 
             return requestString;
         }
@@ -93,18 +93,6 @@ namespace nasa_exoplanet_query_app {
             }
 
             requestString += format; // append the file format
-
-            return requestString;
-        }
-
-        // Builds a http request string that queries the Planetary System table for unique discovery years in ascending order
-        public static string GetPSDiscYearValuesString(string format = "") {
-            string requestString = EXOPLANET_ARCHIVE_BASE_URL +
-                                   "select+distinct+disc_year+from+ps+order+by+disc_year+asc";
-
-            if (!String.IsNullOrEmpty(format)) {
-                requestString += format;
-            }
 
             return requestString;
         }
