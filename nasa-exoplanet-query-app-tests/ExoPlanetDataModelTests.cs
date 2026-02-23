@@ -50,9 +50,15 @@ namespace nasa_exoplanet_query_app {
             model.DiscFacilityStrings = new[] { "f1", "f2" };
             model.ExoPlanetCollection = new System.Collections.ObjectModel.ObservableCollection<ExoPlanetData>();
 
-            Assert.True(events >= 8);
+            Assert.Equal(9, events); // One event for each property set
             Assert.Contains(nameof(model.DiscYearSelectedIndex), changedNames);
             Assert.Contains(nameof(model.DiscYearStrings), changedNames);
+            Assert.Contains(nameof(model.DiscMethodSelectedIndex), changedNames);
+            Assert.Contains(nameof(model.DiscMethodStrings), changedNames);
+            Assert.Contains(nameof(model.HostNameSelectedIndex), changedNames);
+            Assert.Contains(nameof(model.HostNameStrings), changedNames);
+            Assert.Contains(nameof(model.DiscFacilitySelectedIndex), changedNames);
+            Assert.Contains(nameof(model.DiscFacilityStrings), changedNames);
             Assert.Contains(nameof(model.ExoPlanetCollection), changedNames);
         }
     }

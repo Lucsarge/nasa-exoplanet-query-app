@@ -6,23 +6,33 @@ namespace nasa_exoplanet_query_app {
 
         [Fact]
         public void GetPSHTTPRequestString_Constructs_SelectDistinct_OrderBy_And_Format() {
-            string result = ExoplanetTAPHelper.GetPSHTTPRequestString(ExoplanetTAPHelper.HOST_NAME, ExoplanetTAPHelper.FORMAT_CSV);
+            string result = ExoplanetTAPHelper.GetPSUniqueColumnValuesRequestString(ExoplanetTAPHelper.HOST_NAME, ExoplanetTAPHelper.FORMAT_CSV);
 
             string compact = Compact(result);
-            Assert.Contains("select+distinct+hostname", compact);
-            Assert.Contains("+from+ps", compact);
-            Assert.Contains("+order+by+hostname+asc", compact);
+            Assert.Contains($"select+distinct+{ExoplanetTAPHelper.HOST_NAME}", compact);
+            Assert.Contains($"+from+{ExoplanetTAPHelper.PlANETARY_SYSTEMS_TABLE}", compact);
+            Assert.Contains($"+order+by+{ExoplanetTAPHelper.HOST_NAME}+asc", compact);
             Assert.EndsWith(ExoplanetTAPHelper.FORMAT_CSV, result);
         }
 
         [Fact]
-        public void GetPSFilteredResultsRequestString_NoFilters_ProducesSelectAndFormat() {
+        public void GetPSFilteredResultsRequestString_NoFilters_ProducesNoWhereClause() {
             string ns = ExoPlanetDataModel.NOT_SPECIFIED;
             string result = ExoplanetTAPHelper.GetPSFilteredResultsRequestString(ns, ns, ns, ns);
+            Assert.True(result != null || result != string.Empty);
 
             string compact = Compact(result);
-            Assert.Contains("select+pl_name,", compact); // ensure select fields are present
-            Assert.DoesNotContain("where+", compact); // ensure there is no 'where' clause when all are NOT_SPECIFIED
+            // ensure select fields are present
+            Assert.Contains($"select+" +
+                            $"{ExoplanetTAPHelper.PLANET_NAME}," +
+                            $"{ExoplanetTAPHelper.HOST_NAME}," +
+                            $"{ExoplanetTAPHelper.DISC_FACILITY}," +
+                            $"{ExoplanetTAPHelper.DISC_YEAR}," +
+                            $"{ExoplanetTAPHelper.DISC_METHOD}," +
+                            $"{ExoplanetTAPHelper.STAR_COUNT}," +
+                            $"{ExoplanetTAPHelper.PLANET_COUNT}," +
+                            $"{ExoplanetTAPHelper.MOON_COUNT}+", compact);
+            Assert.DoesNotContain("where", compact); // ensure there is no 'where' clause when all are NOT_SPECIFIED
             Assert.EndsWith(ExoplanetTAPHelper.FORMAT_JSON, result);
         }
 
@@ -33,23 +43,14 @@ namespace nasa_exoplanet_query_app {
             string year = "2000";
             string method = "Transit";
 
-            string result = ExoplanetTAPHelper.GetPSFilteredResultsRequestString(host, facility, year, method, "&format=csv");
+            string result = ExoplanetTAPHelper.GetPSFilteredResultsRequestString(host, facility, year, method, ExoplanetTAPHelper.FORMAT_JSON);
             string compact = Compact(result);
 
             Assert.Contains($"where+{ExoplanetTAPHelper.HOST_NAME}='{host}'+", compact);
             Assert.Contains($"and+{ExoplanetTAPHelper.DISC_FACILITY}='{facility}'+", compact);
             Assert.Contains($"and+{ExoplanetTAPHelper.DISC_YEAR}='{year}'+", compact);
             Assert.Contains($"and+{ExoplanetTAPHelper.DISC_METHOD}='{method}'+", compact);
-            Assert.EndsWith("&format=csv", result);
-        }
-
-        [Fact]
-        public void GetPSDiscYearValuesString_AppendsFormatWhenProvided() {
-            string baseResult = ExoplanetTAPHelper.GetPSDiscYearValuesString();
-            Assert.Contains("select+distinct+disc_year+from+ps+order+by+disc_year+asc", Compact(baseResult));
-
-            string withFormat = ExoplanetTAPHelper.GetPSDiscYearValuesString("&format=csv");
-            Assert.EndsWith("&format=csv", withFormat);
+            Assert.EndsWith(ExoplanetTAPHelper.FORMAT_JSON, result);
         }
     }
 }

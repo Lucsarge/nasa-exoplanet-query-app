@@ -34,10 +34,10 @@ namespace nasa_exoplanet_query_app {
         }
 
         private void PopulateDropdownFields() {
-            string requestHostName = ExoplanetTAPHelper.GetPSHTTPRequestString(ExoplanetTAPHelper.HOST_NAME, ExoplanetTAPHelper.FORMAT_CSV);
-            string requestDiscFacility = ExoplanetTAPHelper.GetPSHTTPRequestString(ExoplanetTAPHelper.DISC_FACILITY, ExoplanetTAPHelper.FORMAT_CSV);
-            string requestDiscYear = ExoplanetTAPHelper.GetPSHTTPRequestString(ExoplanetTAPHelper.DISC_YEAR, ExoplanetTAPHelper.FORMAT_CSV);
-            string requestDiscMethod = ExoplanetTAPHelper.GetPSHTTPRequestString(ExoplanetTAPHelper.DISC_METHOD, ExoplanetTAPHelper.FORMAT_CSV);
+            string requestHostName = ExoplanetTAPHelper.GetPSUniqueColumnValuesRequestString(ExoplanetTAPHelper.HOST_NAME, ExoplanetTAPHelper.FORMAT_CSV);
+            string requestDiscFacility = ExoplanetTAPHelper.GetPSUniqueColumnValuesRequestString(ExoplanetTAPHelper.DISC_FACILITY, ExoplanetTAPHelper.FORMAT_CSV);
+            string requestDiscYear = ExoplanetTAPHelper.GetPSUniqueColumnValuesRequestString(ExoplanetTAPHelper.DISC_YEAR, ExoplanetTAPHelper.FORMAT_CSV);
+            string requestDiscMethod = ExoplanetTAPHelper.GetPSUniqueColumnValuesRequestString(ExoplanetTAPHelper.DISC_METHOD, ExoplanetTAPHelper.FORMAT_CSV);
 
             Task.Run(async () => {
                 HttpClient client = new HttpClient();
