@@ -53,3 +53,6 @@ Simple WPF application for that displays query results of the Planetary Systems 
 
 ## Miscellaneous Links
 - [Trello Board](https://trello.com/b/4uqGBbif/nasa-exoplanet-query-app) - ticketing system I used to keep track of my work
+
+## License
+[License](LICENSE)
