@@ -15,6 +15,7 @@ namespace nasa_exoplanet_query_app {
         public const string STAR_COUNT = "sy_snum";
         public const string PLANET_COUNT = "sy_pnum";
         public const string MOON_COUNT = "sy_mnum";
+        public const string DEFAULT_FLAG = "default_flag";
 
         public const string EXOPLANET_ARCHIVE_BASE_URL = "https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=";
 
@@ -91,6 +92,13 @@ namespace nasa_exoplanet_query_app {
                     requestString += $"{DISC_METHOD}='{discMethod}'+";
                 }
             }
+
+            // only include the default entry for each planet to avoid duplicates in the results
+            // the value of the default_flag column is 1 for the default entry for each planet, and 0 for all other entries
+            if (!isFirstFilter) {
+                requestString += "and+";
+            }
+            requestString += $"{DEFAULT_FLAG}='1'+";
 
             requestString += format; // append the file format
 
