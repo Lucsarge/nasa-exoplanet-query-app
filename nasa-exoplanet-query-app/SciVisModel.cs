@@ -6,6 +6,7 @@ namespace nasa_exoplanet_query_app {
     /// Model for SciVisView
     /// </summary>
     public class SciVisModel : ModelBase {
+        private DiscoveryMethodBase mCurrentVisualization;
         private DiscoveryMethodBase mCurrentToolConfig;
         private DiscoveryMethodBase mSelectedDiscoveryMethod;
         private ObservableCollection<DiscoveryMethodBase> mAvailableDiscoveryMethods;
@@ -24,6 +25,14 @@ namespace nasa_exoplanet_query_app {
 
         public ObservableCollection<DiscoveryMethodBase> AvailableDiscoveryMethods {
             get => mAvailableDiscoveryMethods;
+        }
+
+        public DiscoveryMethodBase CurrentVisualization {
+            get => mCurrentVisualization;
+            set {
+                mCurrentVisualization = value;
+                OnPropertyChanged();
+            }
         }
 
         public DiscoveryMethodBase CurrentToolConfig {
@@ -50,7 +59,7 @@ namespace nasa_exoplanet_query_app {
         }
 
         public ICommand ApplyVisualizationCommand {
-            get => mApplyVisualizationCommand ?? (mApplyVisualizationCommand = new RelayCommand(ApplyVisualization));
+            get => mApplyVisualizationCommand ??= new RelayCommand(ApplyVisualization);
         }
 
         private void ApplyVisualization() {

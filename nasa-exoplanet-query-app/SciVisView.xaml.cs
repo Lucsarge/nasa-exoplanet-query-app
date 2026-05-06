@@ -1,3 +1,4 @@
+using HelixToolkit.Wpf;
 using System.Windows.Controls;
 
 namespace nasa_exoplanet_query_app {
