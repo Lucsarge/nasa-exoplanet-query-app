@@ -55,7 +55,7 @@
                               ItemsSource="{Binding AvailableDiscoveryMethods}"
                               SelectedItem="{Binding SelectedDiscoveryMethod, Mode=TwoWay}"
                               DisplayMemberPath="DisplayName"/>
-                    <Button Content="Apply Visualization" 
+                    <Button Content="Apply Visualization"
                             Command="{Binding ApplyVisualizationCommand}"
                             Margin="0,10,0,0"
                             Padding="10,5"/>

@@ -12,6 +12,8 @@ namespace nasa_exoplanet_query_app {
         private ObservableCollection<DiscoveryMethodBase> mAvailableDiscoveryMethods;
         private ICommand? mApplyVisualizationCommand;
 
+        public Action<DiscoveryMethodBase> DiscoveryMethodChanged;
+
         public SciVisModel() {
             // Initialize available discovery methods
             mAvailableDiscoveryMethods = new ObservableCollection<DiscoveryMethodBase> {
@@ -49,8 +51,9 @@ namespace nasa_exoplanet_query_app {
             set {
                 mSelectedDiscoveryMethod = value;
                 OnPropertyChanged();
-                // When method changes, update the tool configuration
-                CurrentToolConfig = value;
+
+                DiscoveryMethodChanged?.Invoke(mSelectedDiscoveryMethod);
+                //CurrentToolConfig = value;
             }
         }
 

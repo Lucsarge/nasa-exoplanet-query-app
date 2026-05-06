@@ -39,6 +39,33 @@ namespace nasa_exoplanet_query_app {
             }
         }
 
+        private TransitMethod mTransitMethod;
+        public TransitMethod TransitMethod {
+            get => mTransitMethod;
+            set {
+                mTransitMethod = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private TransitPhotoView mTransitPhotoView;
+        public TransitPhotoView TransitPhotoView {
+            get => mTransitPhotoView;
+            set {
+                mTransitPhotoView = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private TransitPhotoTool mTransitPhotoTool;
+        public TransitPhotoTool TransitPhotoTool {
+            get => mTransitPhotoTool;
+            set {
+                mTransitPhotoTool = value;
+                OnPropertyChanged();
+            }
+        }
+
         private object mCurrentVisView;
         public object CurrentVisView {
             get => mCurrentVisView;
@@ -59,11 +86,33 @@ namespace nasa_exoplanet_query_app {
 
         public SciVisViewModel() {
             mSciVisModel = new SciVisModel();
+            mSciVisModel.DiscoveryMethodChanged += OnDiscoveryMethodChanged;
+
             mRadialVelocityMethod = new RadialVelocityMethod();
             mCurrentVisView = mRadialVelocityView = new RadialVelocityView(); // Default visualization view
             mRadialVelocityView.DataContext = mRadialVelocityMethod;
             mCurrentToolView = mRadialVelocityTool = new RadialVelocityTool(); // Default tool view
             mRadialVelocityTool.DataContext = mRadialVelocityMethod; // Bind tool view to method config
+
+            mTransitMethod = new TransitMethod();
+            mTransitPhotoView = new TransitPhotoView();
+            mTransitPhotoView.DataContext = mTransitMethod;
+            mTransitPhotoTool = new TransitPhotoTool();
+            mTransitPhotoTool.DataContext = mTransitMethod;
+        }
+
+        private void OnDiscoveryMethodChanged(DiscoveryMethodBase selectedMethod) {
+            // When the selected Discovery Method changes, update the following:
+            // 1. Visualization
+            // 2. Tool configuration
+            // 3. Summary text
+            if (selectedMethod is RadialVelocityMethod) {
+                CurrentVisView = mRadialVelocityView;
+                CurrentToolView = mRadialVelocityTool;
+            } else if (selectedMethod is TransitMethod) {
+                CurrentVisView = mTransitPhotoView;
+                CurrentToolView = mTransitPhotoTool;
+            }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
