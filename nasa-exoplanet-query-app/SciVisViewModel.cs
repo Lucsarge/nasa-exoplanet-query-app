@@ -105,7 +105,6 @@ namespace nasa_exoplanet_query_app {
             // When the selected Discovery Method changes, update the following:
             // 1. Visualization
             // 2. Tool configuration
-            // 3. Summary text
             if (selectedMethod is RadialVelocityMethod) {
                 CurrentVisView = mRadialVelocityView;
                 CurrentToolView = mRadialVelocityTool;
