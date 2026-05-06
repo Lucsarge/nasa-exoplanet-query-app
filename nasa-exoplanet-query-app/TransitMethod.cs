@@ -1,3 +1,5 @@
+using System.Windows.Media.Media3D;
+
 namespace nasa_exoplanet_query_app {
     /// <summary>
     /// Transit discovery method configuration
@@ -30,6 +32,10 @@ namespace nasa_exoplanet_query_app {
         public bool ShowTransitPath {
             get => mShowTransitPath;
             set { mShowTransitPath = value; OnPropertyChanged(); }
+        }
+
+        public Point3D ExoplanetCoords {
+            get => new Point3D(2.5, 0, 0);
         }
     }
 }
