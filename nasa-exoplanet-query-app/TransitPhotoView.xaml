@@ -1,0 +1,39 @@
+<UserControl x:Class="nasa_exoplanet_query_app.TransitPhotoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:nasa_exoplanet_query_app"
+             xmlns:hx="http://helix-toolkit.org/wpf"
+             xmlns:Media3D="clr-namespace:System.Windows.Media.Media3D;assembly=PresentationCore"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <hx:HelixViewport3D x:Name="RadialVelocityViewport"
+                        ShowCoordinateSystem="True"
+                        CoordinateSystemLabelX="X"
+                        CoordinateSystemLabelY="Y"
+                        CoordinateSystemLabelZ="Z"
+                        Background="#1E1E1E">
+            <!-- Default Camera: 10 units away looking at center -->
+            <hx:HelixViewport3D.DefaultCamera>
+                <Media3D:PerspectiveCamera Position="0,0,10" LookDirection="0,0,-1" UpDirection="0,1,0"/>
+            </hx:HelixViewport3D.DefaultCamera>
+
+            <!-- Default Lights -->
+            <hx:DefaultLights/>
+
+            <!-- Star (Sun) at center -->
+            <hx:SphereVisual3D x:Name="Sun"
+                           Center="0,0,0"
+                           Radius="1"
+                           Fill="Orange"/>
+
+            <!-- Exoplanet -->
+            <hx:SphereVisual3D x:Name="Exoplanet"
+                           Center="{Binding ExoplanetCoords}"
+                           Radius="0.3"
+                           Fill="Blue"/>
+        </hx:HelixViewport3D>
+    </Grid>
+</UserControl>
