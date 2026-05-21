@@ -11,7 +11,7 @@
             <ContentControl Content="{Binding QueryView}" />
         </TabItem>
         <TabItem Header="Tools">
-            <ContentPresenter Content="{Binding InteractiveView}" />
+            <ContentPresenter Content="{Binding SciVisView}" />
         </TabItem>
     </TabControl>
 </Window>
