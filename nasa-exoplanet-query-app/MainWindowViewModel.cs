@@ -8,20 +8,22 @@ namespace nasa_exoplanet_query_app {
     public class MainWindowViewModel {
         private QueryView mQueryView;
         private QueryViewModel mQueryViewModel;
-        private InteractiveView mInteractiveView;
+        private SciVisView mSciVisView;
+        private SciVisViewModel mSciVisViewModel;
 
         public QueryView QueryView {
             get => mQueryView;
         }
 
-        public InteractiveView InteractiveView {
-            get => mInteractiveView;
+        public SciVisView SciVisView {
+            get => mSciVisView;
         }
 
         public MainWindowViewModel() {
             mQueryView = new QueryView();
             mQueryView.DataContext = mQueryViewModel = new QueryViewModel();
-            mInteractiveView = new InteractiveView();
+            mSciVisView = new SciVisView();
+            mSciVisView.DataContext = mSciVisViewModel = new SciVisViewModel();
         }
     }
 }
