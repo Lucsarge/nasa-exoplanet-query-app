@@ -13,6 +13,7 @@ namespace nasa_exoplanet_query_app {
         public override string MethodName => "RadialVelocity";
         public override string DisplayName => "Radial Velocity";
         public override string Description => "Detects planets by measuring the wobble of the host star caused by gravitational pull from orbiting planets. The star's velocity toward and away from Earth is measured using Doppler spectroscopy.";
+        public override bool IsAnimating { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public double MinMass {
             get => mMinMass;
