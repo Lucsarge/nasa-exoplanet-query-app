@@ -10,30 +10,71 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <hx:HelixViewport3D x:Name="RadialVelocityViewport"
-                        ShowCoordinateSystem="True"
-                        CoordinateSystemLabelX="X"
-                        CoordinateSystemLabelY="Y"
-                        CoordinateSystemLabelZ="Z"
-                        Background="#1E1E1E">
+                            ShowViewCube="False"
+                            ShowCoordinateSystem="False"
+                            IsRotationEnabled="False"
+                            IsPanEnabled="False"
+                            IsZoomEnabled="False"
+                            IsInertiaEnabled="False"
+                            ZoomExtentsWhenLoaded="False"
+                            Background="#000000">
             <!-- Default Camera: 10 units away looking at center -->
-            <hx:HelixViewport3D.DefaultCamera>
-                <Media3D:PerspectiveCamera Position="0,0,10" LookDirection="0,0,-1" UpDirection="0,1,0"/>
-            </hx:HelixViewport3D.DefaultCamera>
+            <hx:HelixViewport3D.Camera>
+                <Media3D:PerspectiveCamera Position="0,0,20"
+                                           LookDirection="0,0,-1"
+                                           UpDirection="0,1,0"/>
+            </hx:HelixViewport3D.Camera>
 
-            <!-- Default Lights -->
-            <hx:DefaultLights/>
+            <!-- Lights -->
+            <ModelVisual3D>
+                <ModelVisual3D.Content>
+                    <Model3DGroup>
+                        <AmbientLight Color="#555555"/>
 
-            <!-- Star (Sun) at center -->
-            <hx:SphereVisual3D x:Name="Sun"
-                           Center="0,0,0"
-                           Radius="1"
-                           Fill="Orange"/>
+                        <PointLight x:Name="StarLight"
+                                    Color="#FFF5B0"
+                                    Position="0,0,0"
+                                    Range="10"
+                                    ConstantAttenuation="1"
+                                    LinearAttenuation="0"
+                                    QuadraticAttenuation="0"/>
+                    </Model3DGroup>
+                </ModelVisual3D.Content>
+            </ModelVisual3D>
+
+            <!-- Star -->
+            <hx:SphereVisual3D x:Name="StarCore"
+                               Center="0,0,0"
+                               Radius="{Binding StarRadius, Mode=OneTime}"
+                               PhiDiv="40"
+                               ThetaDiv="40"
+                               Material="{Binding StarCoreMaterial}"/>
+            <hx:SphereVisual3D x:Name="StarCorona"
+                               Center="0,0,0"
+                               Radius="1.15"
+                               PhiDiv="40"
+                               ThetaDiv="40"
+                               Material="{Binding StarCoronaMaterial}">
+                <hx:SphereVisual3D.BackMaterial>
+                    <x:Null/>
+                </hx:SphereVisual3D.BackMaterial>
+            </hx:SphereVisual3D>
+            <hx:SphereVisual3D x:Name="StarHalo"
+                               Center="0,0,0"
+                               Radius="1.4"
+                               PhiDiv="40"
+                               ThetaDiv="40"
+                               Material="{Binding StarHaloMaterial}">
+                <hx:SphereVisual3D.BackMaterial>
+                    <x:Null/>
+                </hx:SphereVisual3D.BackMaterial>
+            </hx:SphereVisual3D>
 
             <!-- Exoplanet -->
             <hx:SphereVisual3D x:Name="Exoplanet"
-                           Center="{Binding ExoplanetCoords}"
-                           Radius="0.3"
-                           Fill="Blue"/>
+                               Center="{Binding ExoplanetCoords}"
+                               Radius="{Binding ExoplanetRadius}"
+                               Material="{Binding ExoplanetMaterial}"/>
         </hx:HelixViewport3D>
     </Grid>
 </UserControl>

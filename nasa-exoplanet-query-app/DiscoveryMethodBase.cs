@@ -6,5 +6,6 @@ namespace nasa_exoplanet_query_app {
         public abstract string MethodName { get; }
         public abstract string DisplayName { get; }
         public abstract string Description { get; }
+        public abstract bool IsAnimating { get; set; }
     }
 }

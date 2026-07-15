@@ -96,9 +96,20 @@ namespace nasa_exoplanet_query_app {
 
             mTransitMethod = new TransitMethod();
             mTransitPhotoView = new TransitPhotoView();
+            mTransitPhotoView.OnRendered += OnTransitPhotoViewRendered;
             mTransitPhotoView.DataContext = mTransitMethod;
             mTransitPhotoTool = new TransitPhotoTool();
             mTransitPhotoTool.DataContext = mTransitMethod;
+        }
+
+        double colorTimer = 0;
+        double timeCycle = 20;
+        private void OnTransitPhotoViewRendered(double dt) {
+            if (!mTransitMethod.IsAnimating) return;
+
+            // Orbit the exoplanet around the star
+            colorTimer = (colorTimer + dt) % timeCycle;
+            mTransitMethod.OrbitalAngle = colorTimer / timeCycle * 2 * Math.PI;
         }
 
         private void OnDiscoveryMethodChanged(DiscoveryMethodBase selectedMethod) {
