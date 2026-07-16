@@ -46,7 +46,7 @@ namespace nasa_exoplanet_query_app {
             set {
                 mOrbitDistance = value;
                 OnPropertyChanged();
-                ExoplanetCoords = OrbitGeometry.CalculatePosition(mOrbitDistance, OrbitalAngle);
+                ExoplanetCoords = OrbitalGeometry.CalculatePosition(mOrbitDistance, OrbitalAngle);
             }
         }
 
@@ -56,7 +56,7 @@ namespace nasa_exoplanet_query_app {
             set {
                 mOrbitalAngle = value;
                 OnPropertyChanged();
-                ExoplanetCoords = OrbitGeometry.CalculatePosition(OrbitDistance, mOrbitalAngle);
+                ExoplanetCoords = OrbitalGeometry.CalculatePosition(OrbitDistance, mOrbitalAngle);
             }
         }
 
