@@ -1,0 +1,2 @@
+#define ORBITALGEOMETRYNATIVE_API __declspec(dllexport)
+#define ORBITALGEOMETRYNATIVE_API __declspec(dllimport)
