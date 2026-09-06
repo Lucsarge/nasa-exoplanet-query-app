@@ -1,9 +1,10 @@
 # nasa-exoplanet-query-app
 Simple WPF application for that displays query results of the Planetary Systems table from the NASA Exoplanet Archive.
 
+## Query
 ![Exoplanet Query App on Startup](app_startup.png)
 
-## Features
+### Features
 - Query the NASA Exoplanet Archive Planetary Systems table using the TAP (Table Access Protocol)
 - Filter results by Discovery Year, Discovery Method, Host Name, and Discovery Facility
 - Shows results of the query in a data grid, displaying the following information
@@ -15,6 +16,11 @@ Simple WPF application for that displays query results of the Planetary Systems 
     - Star Count
     - Planet Count
     - Moon Count
+
+## Scientific Visualization
+
+### Transit Photometry
+![Transit Photometry in SciVis](transit_photometry.png)
 
 ## Requirements
 - .NET 8.0 or later
@@ -28,10 +34,7 @@ Simple WPF application for that displays query results of the Planetary Systems 
 
 ## Installation
 
-1. Clone the repository:
-```
-   git clone git@github.com:Lucsarge/nasa-exoplanet-query-app.git
-```
+1. Clone the repository
 2. Open `nasa-exoplanet-query-app.sln` in Visual Studio
 3. Build and Run the nasa-exoplanet-query-app project
 
@@ -50,6 +53,9 @@ Simple WPF application for that displays query results of the Planetary Systems 
 - [Table Access Protocol doc](https://exoplanetarchive.ipac.caltech.edu/docs/TAP/usingTAP.html) - learning document that explains how the Table Access Protocol works, with some examples
 - [Table Access Protocol (IVOA Recommendation)](https://www.ivoa.net/documents/TAP/20190927/REC-TAP-1.1.html) - full documentation on TAP capabilities (useful for understanding some limitations compared to full SQL)
 - [Planetary Systems Definitions](https://exoplanetarchive.ipac.caltech.edu/docs/API_PS_columns.html)
+
+## Resource Links
+- [Exoplanet Detection Wiki](https://en.wikipedia.org/wiki/Methods_of_detecting_exoplanets)
 
 ## Miscellaneous Links
 - [Trello Board](https://trello.com/b/4uqGBbif/nasa-exoplanet-query-app) - ticketing system I used to keep track of my work
