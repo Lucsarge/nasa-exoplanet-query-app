@@ -17,9 +17,5 @@ namespace nasa_exoplanet_query_app {
 
             DataContext = vm;
         }
-
-        private void PS_Table_Refresh_Button_Click(object sender, RoutedEventArgs e) {
-            vm.GetResultsFromPlanetarySystems();
-        }
     }
 }

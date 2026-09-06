@@ -1,0 +1,39 @@
+<UserControl x:Class="nasa_exoplanet_query_app.TransitPhotoTool"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:nasa_exoplanet_query_app"
+             mc:Ignorable="d">
+    <StackPanel Orientation="Vertical" Margin="10">
+        <TextBlock Text="Transit Parameters" FontWeight="Bold" Margin="0,0,0,10"/>
+        <StackPanel Orientation="Horizontal" Margin="0,5">
+            <TextBlock Text="Planet Radius:" Width="80"/>
+            <Slider Width="150" Minimum="0.5" Maximum="2"
+                Value="{Binding ExoplanetRadius, Mode=TwoWay}"/>
+            <TextBlock Text="{Binding ExoplanetRadius, StringFormat={}{0:F2} R⊕}" Width="60"/>
+        </StackPanel>
+        <!--Currently unused parameters, but could be used for more advanced orbital calculations in the future-->
+        <!--<StackPanel Margin="0,5">
+            <TextBlock Text="Orbital Period:" Width="80"/>
+            <Slider Width="150" Minimum="1" Maximum="365"
+                Value="{Binding OrbitalPeriod, Mode=TwoWay}"/>
+            <TextBlock Text="{Binding OrbitalPeriod, StringFormat={}{0:F0} days}" Width="60"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0,5">
+            <TextBlock Text="Impact Parameter:" Width="80"/>
+            <Slider Width="150" Minimum="0" Maximum="1"
+                Value="{Binding ImpactParameter, Mode=TwoWay}"/>
+            <TextBlock Text="{Binding ImpactParameter, StringFormat={}{0:F2}}" Width="60"/>
+        </StackPanel>-->
+        <StackPanel Orientation="Horizontal" Margin="0,5">
+            <TextBlock Text="Orbit Distance:" Width="80"/>
+            <Slider Width="150" Minimum="{Binding MinOrbitDistance}" Maximum="7"
+                Value="{Binding OrbitDistance, Mode=TwoWay}"/>
+            <TextBlock Text="{Binding OrbitDistance, StringFormat={}{0:F2} AU}" Width="60"/>
+        </StackPanel>
+        <CheckBox Content="Is Animating"
+                  IsChecked="{Binding IsAnimating}"
+                  Margin="0,5,0,0"/>
+    </StackPanel>
+</UserControl>

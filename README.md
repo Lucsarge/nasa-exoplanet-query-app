@@ -1,9 +1,10 @@
 # nasa-exoplanet-query-app
 Simple WPF application for that displays query results of the Planetary Systems table from the NASA Exoplanet Archive.
 
+## Query
 ![Exoplanet Query App on Startup](app_startup.png)
 
-## Features
+### Features
 - Query the NASA Exoplanet Archive Planetary Systems table using the TAP (Table Access Protocol)
 - Filter results by Discovery Year, Discovery Method, Host Name, and Discovery Facility
 - Shows results of the query in a data grid, displaying the following information
@@ -15,6 +16,9 @@ Simple WPF application for that displays query results of the Planetary Systems 
     - Star Count
     - Planet Count
     - Moon Count
+
+## Transit View
+![Transit Photometry in SciVis](transit_photometry.png)
 
 ## Requirements
 - .NET 8.0 or later
