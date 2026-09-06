@@ -7,11 +7,6 @@ namespace nasa_exoplanet_query_app {
     /// Transit discovery method configuration
     /// </summary>
     public class TransitMethod : DiscoveryMethodBase {
-        private double mExoplanetRadius = 1.0;
-        private double mOrbitalPeriod = 365;
-        private double mImpactParameter = 0.5;
-        private bool mShowTransitPath = true;
-
         public override string MethodName => "Transit";
         public override string DisplayName => "Transit Photometry";
         public override string Description => "Detects planets by measuring the dimming of a star's light when a planet passes in front of it. The amount of dimming reveals the planet's size, and the frequency reveals its orbital period.";
@@ -22,6 +17,7 @@ namespace nasa_exoplanet_query_app {
             set { mIsAnimating = value; OnPropertyChanged(); }
         }
 
+        private double mExoplanetRadius = 1.0;
         public double ExoplanetRadius {
             get => mExoplanetRadius;
             set { mExoplanetRadius = value; OnPropertyChanged(); OnPropertyChanged(nameof(MinOrbitDistance)); }
@@ -33,13 +29,21 @@ namespace nasa_exoplanet_query_app {
             set { mStarRadius = value; OnPropertyChanged(); OnPropertyChanged(nameof(MinOrbitDistance)); }
         }
 
+        // Currently unused parameters, but could be used for more advanced orbital calculations in the future
+
+        //private double mOrbitalPeriod = 365;
+        //public double OrbitalPeriod {
+        //    get => mOrbitalPeriod;
+        //    set { mOrbitalPeriod = value; OnPropertyChanged(); }
+        //}
+
+        //private double mImpactParameter = 0.5;
+        //public double ImpactParameter {
+        //    get => mImpactParameter;
+        //    set { mImpactParameter = value; OnPropertyChanged(); }
+        //}
+
         public double MinOrbitDistance => StarRadius + ExoplanetRadius;
-
-        public double OrbitalPeriod {
-            get => mOrbitalPeriod;
-            set { mOrbitalPeriod = value; OnPropertyChanged(); }
-        }
-
         private double mOrbitDistance = 5.0;
         public double OrbitDistance {
             get => mOrbitDistance;
@@ -58,16 +62,6 @@ namespace nasa_exoplanet_query_app {
                 OnPropertyChanged();
                 ExoplanetCoords = OrbitalGeometry.CalculatePosition(OrbitDistance, mOrbitalAngle);
             }
-        }
-
-        public double ImpactParameter {
-            get => mImpactParameter;
-            set { mImpactParameter = value; OnPropertyChanged(); }
-        }
-
-        public bool ShowTransitPath {
-            get => mShowTransitPath;
-            set { mShowTransitPath = value; OnPropertyChanged(); }
         }
 
         private Point3D mExoplanetCoords = new Point3D(5, 0, 0);
