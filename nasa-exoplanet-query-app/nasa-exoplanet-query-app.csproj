@@ -8,6 +8,20 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HelixToolkit" Version="3.1.2" />
+    <PackageReference Include="HelixToolkit.Wpf" Version="3.1.2" />
+    <ProjectReference Include="..\OrbitalGeometryNative\OrbitalGeometryNative.vcxproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+
+  <Target Name="CopyOrbitalGeometryNativeDll" AfterTargets="Build">
+    <Copy SourceFiles="$(MSBuildThisFileDirectory)..\x64\$(Configuration)\OrbitalGeometryNative.dll" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+  </Target>
 
 </Project>

@@ -1,0 +1,92 @@
+<UserControl x:Class="nasa_exoplanet_query_app.QueryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:nasa_exoplanet_query_app"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label
+                Content="Discovery Year:"
+                Grid.Column="0"
+                Grid.Row="0"/>
+            <Label
+                Content="Discovery Method:"
+                Grid.Column="0"
+                Grid.Row="1"/>
+            <Label
+                Content="Host Name:"
+                Grid.Column="0"
+                Grid.Row="2"/>
+            <Label
+                Content="Discovery Facility:"
+                Grid.Column="0"
+                Grid.Row="3"/>
+
+            <ComboBox
+                x:Name="DiscYearSelection"
+                Grid.Column="1"
+                Grid.Row="0"
+                DataContext="{Binding EPModel}"
+                ItemsSource="{Binding DiscYearStrings}"
+                SelectedIndex="{Binding DiscYearSelectedIndex}"/>
+            <ComboBox
+                x:Name="DiscMethodSelection"
+                Grid.Column="1"
+                Grid.Row="1"
+                DataContext="{Binding EPModel}"
+                ItemsSource="{Binding DiscMethodStrings}"
+                SelectedIndex="{Binding DiscMethodSelectedIndex}"/>
+            <ComboBox
+                x:Name="HostNameSelection"
+                Grid.Column="1"
+                Grid.Row="2"
+                DataContext="{Binding EPModel}"
+                ItemsSource="{Binding HostNameStrings}"
+                SelectedIndex="{Binding HostNameSelectedIndex}"/>
+            <ComboBox
+                x:Name="DiscFacilitySelection"
+                Grid.Column="1"
+                Grid.Row="3"
+                DataContext="{Binding EPModel}"
+                ItemsSource="{Binding DiscFacilityStrings}"
+                SelectedIndex="{Binding DiscFacilitySelectedIndex}"/>
+
+            <Button
+                Grid.Column="0"
+                Grid.Row="4"
+                Grid.ColumnSpan="2"
+                Content="Filter"
+                Width="75"
+                Height="35"
+                Click="PS_Table_Refresh_Button_Click"/>
+
+            <DataGrid
+                Grid.Column="0"
+                Grid.Row="5"
+                Grid.ColumnSpan="2"
+                DataContext="{Binding EPModel}"
+                ItemsSource="{Binding ExoPlanetCollection}"
+                AutoGenerateColumns="True"
+                CanUserAddRows="False"
+                CanUserDeleteRows="False"
+                CanUserResizeRows="False"
+                CanUserResizeColumns="True"
+                CanUserSortColumns="True"/>
+        </Grid>
+    </Grid>
+</UserControl>
